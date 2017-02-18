@@ -52,6 +52,14 @@ func main() {
 
 		}
 	})
+	http.HandleFunc("/quit", func(w http.ResponseWriter, r *http.Request) {
+               defer os.Exit(0)
+               log.Println("[INFO] Container Quit Hook Called")
+        })
+        http.HandleFunc("/crash", func(w http.ResponseWriter, r *http.Request) {
+               defer os.Exit(1)
+               log.Println("[INFO] Container Crash Hook Called")
+        })
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Hello, %q\n", html.EscapeString(r.URL.Path))
 		hostname, _ := os.Hostname()
