@@ -25,7 +25,12 @@ func init() {
 }
 
 func main() {
+	port := ":8080"
+	if len(os.Args) > 1 {
+		port = os.Args[1]
+	}
 	log.Printf("[INFO] %s version %s started", os.Args[0], version)
+	log.Printf("[INFO] Listening on %s", port)
 	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodGet:
@@ -58,6 +63,5 @@ func main() {
 		}
 	})
 
-	log.Fatal(http.ListenAndServe(":8080", nil))
-
+	log.Fatal(http.ListenAndServe(port, nil))
 }
