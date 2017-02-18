@@ -14,10 +14,18 @@ type StatusUpdate struct {
 	Status int `json:"status"`
 }
 
-func main() {
-	// I know this is not thread safe
-	var healthStatus int = 200
+const (
+	version = "0.1"
+)
 
+var healthStatus int
+
+func init() {
+	healthStatus = 200
+}
+
+func main() {
+	log.Printf("[INFO] %s version %s started", os.Args[0], version)
 	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodGet:
