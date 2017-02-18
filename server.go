@@ -47,12 +47,6 @@ func main() {
 
 		}
 	})
-	http.HandleFunc("/start", func(w http.ResponseWriter, r *http.Request) {
-		log.Println("[INFO] Container Start Hook Called")
-	})
-	http.HandleFunc("/stop", func(w http.ResponseWriter, r *http.Request) {
-		log.Println("[INFO] Container Stop Hook Called")
-	})
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Hello, %q\n", html.EscapeString(r.URL.Path))
 		hostname, _ := os.Hostname()
