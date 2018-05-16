@@ -53,17 +53,18 @@ func main() {
 		}
 	})
 	http.HandleFunc("/quit", func(w http.ResponseWriter, r *http.Request) {
-               defer os.Exit(0)
-               log.Println("[INFO] Container Quit Hook Called")
-        })
-        http.HandleFunc("/crash", func(w http.ResponseWriter, r *http.Request) {
-               defer os.Exit(1)
-               log.Println("[INFO] Container Crash Hook Called")
-        })
+		defer os.Exit(0)
+		log.Println("[INFO] Container Quit Hook Called")
+	})
+	http.HandleFunc("/crash", func(w http.ResponseWriter, r *http.Request) {
+		defer os.Exit(1)
+		log.Println("[INFO] Container Crash Hook Called")
+	})
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Hello, %q\n", html.EscapeString(r.URL.Path))
 		hostname, _ := os.Hostname()
 		fmt.Fprintf(w, "HOST: %s\n", hostname)
+		fmt.Fprintf(w, "REMOTE: %s\n", r.RemoteAddr)
 		fmt.Fprintf(w, "ADDRESSES:\n")
 		addrs, _ := net.InterfaceAddrs()
 		for _, addr := range addrs {
