@@ -61,7 +61,9 @@ func main() {
 		log.Println("[INFO] Container Crash Hook Called")
 	})
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello, %q\n", html.EscapeString(r.URL.Path))
+		urlPath := html.EscapeString(r.URL.Path)
+		log.Printf("[INFO] Received a request from %s on URL path %q", r.RemoteAddr, urlPath)
+		fmt.Fprintf(w, "Hello, %q\n", urlPath)
 		hostname, _ := os.Hostname()
 		fmt.Fprintf(w, "HOST: %s\n", hostname)
 		fmt.Fprintf(w, "REMOTE: %s\n", r.RemoteAddr)
